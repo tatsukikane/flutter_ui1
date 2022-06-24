@@ -45,32 +45,43 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: SafeArea(
-        child: 
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Text("Default"),
-              Text(
-                "Bold",
-                style: TextStyle(fontWeight: FontWeight.bold),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: Scaffold(
+        body: Column(
+          //縦の並び
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            // デフォルト表示
+            Text('Default'),
+            // 太さを指定
+            Text('Bold', style: TextStyle(fontWeight: FontWeight.bold)),
+            // スタイルを指定
+            Text('Italic', style: TextStyle(fontStyle: FontStyle.italic)),
+            // サイズを指定
+            Text('fontSize = 36', style: TextStyle(fontSize: 36)),
+            // 色を指定
+            Text('Red', style: TextStyle(color: Colors.red)),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black45, width: 8),
+                borderRadius: BorderRadius.circular(8),
+                // color: Colors.blue
+                image: DecorationImage(
+                  image: NetworkImage('https://www.theart.jp/common/images/pc/content/wallart/cont02_img02.jpg')),
               ),
-              Text(
-                'Italic',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-              //ここに配置していく
-
-            ],
-          ),
+              padding: EdgeInsets.all(8),
+              margin: EdgeInsets.all(8),
+              height: 200,
+              width: double.infinity,
+              // color: Colors.blue,
+              // 表示位置を指定
+              child: Text('TextAlign.center', textAlign: TextAlign.center),
+            ),
+          ],
         ),
       ),
-
     );
   }
 }
