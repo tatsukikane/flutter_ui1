@@ -1,86 +1,175 @@
+/// このコード以外のリソースを使いたいとき import 'リソースのパス'　と書きます。
+/// material.dart の中には UI を作るための部品が入っていると思ってください。
 import 'package:flutter/material.dart';
 
-
-const Color kAccentColor = Color(0xFFFE7C64);
-const Color kBackgroundColor = Color(0xFF19283D);
-const Color kTextColorPrimary = Color(0xFFECEFF1);
-const Color kTextColorSecondary = Color(0xFFB0BEC5);
-const Color kButtonColorPrimary = Color(0xFFECEFF1);
-const Color kButtonTextColorPrimary = Color(0xFF455A64);
-const Color kIconColor = Color(0xFF455A64);
-
-
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MyApp(), //下で作ったSTLを表示
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //エミュレーターの右上のデバックを非表示にする
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      //MaterialAppのtheme: に指定したThemeDataが アプリ全体に適用されます。
-      theme: ThemeData.dark().copyWith(
-        colorScheme: 
-          //ダークモードみたいな感じ
-          ColorScheme.fromSwatch().copyWith(secondary: kAccentColor),
+       debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          leading: Icon(Icons.arrow_back_ios),
+          title: Column(
+            children: [
+              Text(
+                "たつき@G's Lab13期",
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                  color: Colors.white,
+                  // wordSpacing: 8.0,
+                  // letterSpacing: 2.0,
+                  // decoration: TextDecoration.overline
+                  // backgroundColor: Colors.yellow, 文字の後ろだけ色つく
+                  // decoration: TextDecoration.underline,decorationStyle: TextDecorationStyle.dashed
+                ),
+               ),
+               Text(
+                'ツイート：7,777',
+                style: TextStyle(
+                  fontSize: 10,
+                ),
+               ),
+            ],
+          ),
+           actions: <Widget>[
+            IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.search_rounded))
+           ],
+        ),
+        //横に並べるときはRow
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  border:Border(bottom: BorderSide(
+                    color: Colors.black,
+                    width: 1,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'ツイート',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.blueAccent,
+                        decorationThickness: 5,
+                      ),
+                    ),
+                    Text('ツイートと返信'),
+                    Text('メディア'),
+                    Text('いいね'),
+                  ],
+                ),
+              ),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+              TweetTile(),
+        
+        
+            ],
+          ),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
+
+
+//下記の感じで自分でwidgetを作って使い回す事ができる
+class TweetTile extends StatelessWidget {
+  const TweetTile({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: Scaffold(
-        body: Column(
-          //縦の並び
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            // デフォルト表示
-            Text('Default'),
-            // 太さを指定
-            Text('Bold', style: TextStyle(fontWeight: FontWeight.bold)),
-            // スタイルを指定
-            Text('Italic', style: TextStyle(fontStyle: FontStyle.italic)),
-            // サイズを指定
-            Text('fontSize = 36', style: TextStyle(fontSize: 36)),
-            // 色を指定
-            Text('Red', style: TextStyle(color: Colors.red)),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black45, width: 8),
-                borderRadius: BorderRadius.circular(8),
-                // color: Colors.blue
-                image: DecorationImage(
-                  image: NetworkImage('https://www.theart.jp/common/images/pc/content/wallart/cont02_img02.jpg')),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      // padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 8),
+      // padding: const EdgeInsets.only(left: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            maxRadius: 32,
+            backgroundImage: NetworkImage('https://pbs.twimg.com/profile_images/1540352384336941056/HFFQN715_400x400.jpg'),
+          ),
+          SizedBox(width: 8,),
+          Column(
+            //横の位置調整 左よせ
+            crossAxisAlignment: CrossAxisAlignment.start,
+            //縦の位置調整 
+            // mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  Text("たつき@G's Lab13期"),
+                  SizedBox(width: 8), //TextとTextの間に空白を作る
+                  Text('2022/06/25'),
+                ],
               ),
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.all(8),
-              height: 200,
-              width: double.infinity,
-              // color: Colors.blue,
-              // 表示位置を指定
-              child: Text('TextAlign.center', textAlign: TextAlign.center),
-            ),
-          ],
-        ),
+              SizedBox(height: 4,),
+              Text('PHP選手権お疲れでした!!!'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    iconSize: 16,
+                    onPressed: (){},
+                    icon: Icon(Icons.chat_bubble_outline),
+                  ),
+
+                  IconButton(
+                    iconSize: 16,
+                    onPressed: (){},
+                    icon: Icon(Icons.sync_alt),
+                  ),
+                  
+                  IconButton(
+                    iconSize: 16,
+                    onPressed: (){},
+                    icon: Icon(Icons.save_alt),
+                  ),
+
+                  IconButton(
+                    iconSize: 16,
+                    onPressed: (){},
+                    icon: Icon(Icons.favorite_border),
+                  ),
+
+                  IconButton(
+                    iconSize: 16,
+                    onPressed: (){},
+                    icon: Icon(Icons.bar_chart),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
